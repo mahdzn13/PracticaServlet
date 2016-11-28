@@ -1,0 +1,108 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <!-- Upload Servlet -->
+  <context-param>
+    <param-name>file-upload</param-name>
+    <param-value>
+      C:\\xampp\\tomcat\\webapps\\data\\
+    </param-value>
+    <description>Location to store uploaded file</description>
+  </context-param>
+
+  <!-- Auth filter -->
+  <filter>
+    <filter-name>Auth</filter-name>
+    <filter-class>Filters.AuthFilter</filter-class>
+    <init-param>
+      <param-name>test-param</param-name>
+      <param-value>Initialization Paramter</param-value>
+    </init-param>
+  </filter>
+
+  <!-- Auth filter -->
+  <filter-mapping>
+    <filter-name>Auth</filter-name>
+    <url-pattern>/menu.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Auth</filter-name>
+    <url-pattern>/UserServlets.Files</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Auth</filter-name>
+    <url-pattern>/UserServlets.UploadServlet</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Auth</filter-name>
+    <url-pattern>/SessionServlets.Logout</url-pattern>
+  </filter-mapping>
+
+ <!-- Upload Servlet -->
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>UserServlets.UploadServlet</servlet-class>
+  </servlet>
+  <!-- Login Servlet -->
+  <servlet>
+    <servlet-name>LoginForm</servlet-name>
+    <servlet-class>SessionServlets.LoginForm</servlet-class>
+  </servlet>
+  <!-- Error handling Servlet -->
+  <servlet>
+    <servlet-name>ErrorHandler</servlet-name>
+    <servlet-class>Errors.ErrorHandler</servlet-class>
+  </servlet>
+
+  <!-- UserServlets.Files Servlet -->
+  <servlet>
+    <servlet-name>Files</servlet-name>
+    <servlet-class>UserServlets.Files</servlet-class>
+  </servlet>
+
+
+  <!-- UserServlets.Files Servlet -->
+  <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>SessionServlets.Logout</servlet-class>
+  </servlet>
+
+
+
+  <!-- UserServlets.Files -->
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/SessionServlets.Logout</url-pattern>
+  </servlet-mapping>
+
+  <!-- UserServlets.Files -->
+  <servlet-mapping>
+    <servlet-name>Files</servlet-name>
+    <url-pattern>/UserServlets.Files</url-pattern>
+  </servlet-mapping>
+
+  <!-- Error handling -->
+  <servlet-mapping>
+    <servlet-name>ErrorHandler</servlet-name>
+    <url-pattern>/Errors.ErrorHandler</url-pattern>
+  </servlet-mapping>
+  <!-- Login Servlet -->
+  <servlet-mapping>
+    <servlet-name>LoginForm</servlet-name>
+    <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  <!-- Upload Servlet -->
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/UserServlets.UploadServlet</url-pattern>
+  </servlet-mapping>
+
+  <error-page>
+    <error-code>500</error-code>
+    <location>/Errors.ErrorHandler</location>
+  </error-page>
+
+</web-app>
