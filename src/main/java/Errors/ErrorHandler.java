@@ -14,7 +14,9 @@ public class ErrorHandler extends HttpServlet {
     {
         // Set response content type
         response.setContentType("text/html");
+        request.getSession().setAttribute("loginError","Email or password is wrong or doesn't exists.");
         response.sendRedirect("index.jsp");
+
     }
     // Method to handle POST method request.
     public void doPost(HttpServletRequest request,

@@ -40,6 +40,7 @@ public class LoginForm extends HttpServlet {
         for (User user : users) {
             if(user.getEmail().equals(email) && user.getPassword().equals(pwd)){
                 login = true;
+
                 HttpSession session = request.getSession();
                 session.setAttribute("email", user.getEmail());
                 //setting session to expiry in 15 mins
@@ -63,12 +64,21 @@ public class LoginForm extends HttpServlet {
                     }
                 }
                 userdir = userdir.substring(0,arrobaPos);
-
+                File directory = new File(getServletContext().getInitParameter("file-upload") + userdir);
+                directory.mkdir();
                 String strPath = getServletContext().getInitParameter("file-upload") + userdir;
                 File strFile = new File(strPath + "\\UserLoggingLog.log");
 
-                String logContent = "Last logging - Date: " + new Date() + " Username: " + user.getUsername() + " Ip: " + request.getRemoteAddr();
+                String logContent = "Logged on <span style=\"color:red\">" + new Date() + "</span> as <span style=\"color:blue\">" + user.getUsername() + "</span> from the ip <span style=\"color:green\">" + request.getRemoteAddr() + "</span>";
                 BufferedWriter outStream= new BufferedWriter(new FileWriter(strFile, true));
+                outStream.newLine();
+                outStream.write(logContent);
+                outStream.close();
+                System.out.println("hi");
+                strPath = getServletContext().getInitParameter("file-upload");
+                strFile = new File(strPath + "Logs.log");
+                logContent = "Logged on <span style=\"color:red\">" + new Date() + "</span> as <span style=\"color:blue\">" + user.getUsername() + "</span> from the ip <span style=\"color:green\">" + request.getRemoteAddr() + "</span>";
+                outStream= new BufferedWriter(new FileWriter(strFile, true));
                 outStream.newLine();
                 outStream.write(logContent);
                 outStream.close();
@@ -76,10 +86,8 @@ public class LoginForm extends HttpServlet {
             }
         }
         if (!login){
-            throw new ServletException("Login failed.");
+            throw new ServletException();
         }
-
-
 
         response.sendRedirect("menu.jsp");
     }
